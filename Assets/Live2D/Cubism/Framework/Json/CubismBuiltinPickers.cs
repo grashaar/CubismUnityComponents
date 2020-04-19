@@ -58,5 +58,17 @@ namespace Live2D.Cubism.Framework.Json
         {
             return sender.Textures[drawable.TextureIndex];
         }
+
+
+        /// <summary>
+        /// Builtin <see cref="Texture2D"/> path picker.
+        /// </summary>
+        /// <param name="sender">Event source.</param>
+        /// <param name="drawable">Drawable to map to.</param>
+        /// <returns>Mapped texture path.</returns>
+        public static string TexturePathPicker(CubismModel3Json sender, CubismDrawable drawable)
+        {
+            return sender.FileReferences.Textures[drawable.TextureIndex];
+        }
     }
 }

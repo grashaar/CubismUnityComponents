@@ -60,6 +60,14 @@ namespace Live2D.Cubism.Framework.Json
         /// <returns>Picked texture.</returns>
         public delegate Texture2D TexturePicker(CubismModel3Json sender, CubismDrawable drawable);
 
+        /// <summary>
+        /// Picks a <see cref="Texture2D"/> path for a <see cref="CubismDrawable"/>.
+        /// </summary>
+        /// <param name="sender">Event source.</param>
+        /// <param name="drawable">Drawable to pick for.</param>
+        /// <returns>Picked texture path.</returns>
+        public delegate string TexturePathPicker(CubismModel3Json sender, CubismDrawable drawable);
+
         #endregion
 
         #region Load Methods
@@ -505,6 +513,243 @@ namespace Live2D.Cubism.Framework.Json
                 var motionFadeController = model.gameObject.GetComponent<CubismFadeController>();
 
                 if(motionFadeController == null)
+                {
+                    motionFadeController = model.gameObject.AddComponent<CubismFadeController>();
+                }
+
+            }
+
+
+            // Initialize physics if JSON exists.
+            var physics3JsonAsString = Physics3Json;
+
+
+            if (!string.IsNullOrEmpty(physics3JsonAsString))
+            {
+                var physics3Json = CubismPhysics3Json.LoadFrom(physics3JsonAsString);
+                var physicsController = model.gameObject.GetComponent<CubismPhysicsController>();
+
+                if (physicsController == null)
+                {
+                    physicsController = model.gameObject.AddComponent<CubismPhysicsController>();
+
+                }
+
+                physicsController.Initialize(physics3Json.ToRig());
+            }
+
+
+            var userData3JsonAsString = UserData3Json;
+
+
+            if (!string.IsNullOrEmpty(userData3JsonAsString))
+            {
+                var userData3Json = CubismUserData3Json.LoadFrom(userData3JsonAsString);
+
+
+                var drawableBodies = userData3Json.ToBodyArray(CubismUserDataTargetType.ArtMesh);
+
+                for (var i = 0; i < drawables.Length; ++i)
+                {
+                    var index = GetBodyIndexById(drawableBodies, drawables[i].Id);
+
+                    if (index >= 0)
+                    {
+                        var tag = drawables[i].gameObject.GetComponent<CubismUserDataTag>();
+
+
+                        if (tag == null)
+                        {
+                            tag = drawables[i].gameObject.AddComponent<CubismUserDataTag>();
+                        }
+
+
+                        tag.Initialize(drawableBodies[index]);
+                    }
+                }
+            }
+
+            if (model.gameObject.GetComponent<Animator>() == null)
+            {
+                model.gameObject.AddComponent<Animator>();
+            }
+
+            // Make sure model is 'fresh'
+            model.ForceUpdateNow();
+
+
+            return model;
+        }
+
+        /// <summary>
+        /// Instantiates a <see cref="CubismMoc">model source</see> and a <see cref="CubismModel">model</see>.
+        /// </summary>
+        /// <param name="pickMaterial">The material mapper to use.</param>
+        /// <param name="pickTexturePath">The texture mapper to use.</param>
+        /// <param name="shouldImportAsOriginalWorkflow">Should import as original workflow.</param>
+        /// <returns>The instantiated <see cref="CubismModel">model</see> on success; <see langword="null"/> otherwise.</returns>
+        public CubismModel ToModel(MaterialPicker pickMaterial, TexturePathPicker pickTexturePath, bool shouldImportAsOriginalWorkflow = false)
+        {
+            // Initialize model source and instantiate it.
+            var mocAsBytes = Moc3;
+
+
+            if (mocAsBytes == null)
+            {
+                return null;
+            }
+
+
+            var moc = CubismMoc.CreateFrom(mocAsBytes);
+
+
+            var model = CubismModel.InstantiateFrom(moc);
+
+
+            model.name = Path.GetFileNameWithoutExtension(FileReferences.Moc);
+
+
+#if UNITY_EDITOR
+            // Add parameters and parts inspectors.
+            model.gameObject.AddComponent<CubismParametersInspector>();
+            model.gameObject.AddComponent<CubismPartsInspector>();
+#endif
+
+            // Create renderers.
+            var rendererController = model.gameObject.AddComponent<CubismRenderController>();
+            var renderers = rendererController.Renderers;
+
+            var drawables = model.Drawables;
+
+
+            // Initialize materials.
+            for (var i = 0; i < renderers.Length; ++i)
+            {
+                renderers[i].Material = pickMaterial(this, drawables[i]);
+            }
+
+
+            // Initialize textures.
+            for (var i = 0; i < renderers.Length; ++i)
+            {
+                renderers[i].MainTexturePath = pickTexturePath(this, drawables[i]);
+
+                if (i == 0)
+                {
+                    rendererController.MutualTexturePath = renderers[i].MainTexturePath;
+                }
+            }
+
+
+            // Initialize drawables.
+            if (HitAreas != null)
+            {
+                for (var i = 0; i < HitAreas.Length; i++)
+                {
+                    for (var j = 0; j < drawables.Length; j++)
+                    {
+                        if (drawables[j].Id == HitAreas[i].Id)
+                        {
+                            // Add components for hit judgement to HitArea target Drawables.
+                            var hitDrawable = drawables[j].gameObject.AddComponent<CubismHitDrawable>();
+                            hitDrawable.Name = HitAreas[i].Name;
+
+                            drawables[j].gameObject.AddComponent<CubismRaycastable>();
+                            break;
+                        }
+                    }
+                }
+            }
+
+
+            // Initialize groups.
+            var parameters = model.Parameters;
+
+
+            for (var i = 0; i < parameters.Length; ++i)
+            {
+                if (IsParameterInGroup(parameters[i], "EyeBlink"))
+                {
+                    if (model.gameObject.GetComponent<CubismEyeBlinkController>() == null)
+                    {
+                        model.gameObject.AddComponent<CubismEyeBlinkController>();
+                    }
+
+
+                    parameters[i].gameObject.AddComponent<CubismEyeBlinkParameter>();
+                }
+
+
+                // Set up mouth parameters.
+                if (IsParameterInGroup(parameters[i], "LipSync"))
+                {
+                    if (model.gameObject.GetComponent<CubismMouthController>() == null)
+                    {
+                        model.gameObject.AddComponent<CubismMouthController>();
+                    }
+
+
+                    parameters[i].gameObject.AddComponent<CubismMouthParameter>();
+                }
+            }
+
+
+            // Add mask controller if required.
+            for (var i = 0; i < drawables.Length; ++i)
+            {
+                if (!drawables[i].IsMasked)
+                {
+                    continue;
+                }
+
+
+                // Add controller exactly once...
+                model.gameObject.AddComponent<CubismMaskController>();
+
+
+                break;
+            }
+
+            // Add original workflow component if is original workflow.
+            if (shouldImportAsOriginalWorkflow)
+            {
+                // Add cubism update manager.
+                var updateaManager = model.gameObject.GetComponent<CubismUpdateController>();
+
+                if (updateaManager == null)
+                {
+                    model.gameObject.AddComponent<CubismUpdateController>();
+                }
+
+                // Add parameter store.
+                var parameterStore = model.gameObject.GetComponent<CubismParameterStore>();
+
+                if (parameterStore == null)
+                {
+                    parameterStore = model.gameObject.AddComponent<CubismParameterStore>();
+                }
+
+                // Add pose controller.
+                var poseController = model.gameObject.GetComponent<CubismPoseController>();
+
+                if (poseController == null)
+                {
+                    poseController = model.gameObject.AddComponent<CubismPoseController>();
+                }
+
+                // Add expression controller.
+                var expressionController = model.gameObject.GetComponent<CubismExpressionController>();
+
+                if (expressionController == null)
+                {
+                    expressionController = model.gameObject.AddComponent<CubismExpressionController>();
+                }
+
+
+                // Add fade controller.
+                var motionFadeController = model.gameObject.GetComponent<CubismFadeController>();
+
+                if (motionFadeController == null)
                 {
                     motionFadeController = model.gameObject.AddComponent<CubismFadeController>();
                 }

@@ -165,7 +165,12 @@ namespace Live2D.Cubism.Editor.Importers
 
 
             // Instantiate model source and model.
+#if LIVE_2D_ADDRESSABLES
+            var model = Model3Json.ToModel(CubismImporter.OnPickMaterial, CubismImporter.OnPickTexturePath, ShouldImportAsOriginalWorkflow);
+#else
             var model = Model3Json.ToModel(CubismImporter.OnPickMaterial, CubismImporter.OnPickTexture, ShouldImportAsOriginalWorkflow);
+#endif
+
             var moc = model.Moc;
 
 
@@ -279,7 +284,7 @@ namespace Live2D.Cubism.Editor.Importers
             }
         }
 
-        #endregion
+#endregion
 
         private static void CopyUserData(CubismModel source, CubismModel destination, bool copyComponentsOnly = false)
         {

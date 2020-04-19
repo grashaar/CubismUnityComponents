@@ -72,6 +72,11 @@ namespace Live2D.Cubism.Editor.Importers
         /// </summary>
         public static CubismModel3Json.TexturePicker OnPickTexture = CubismBuiltinPickers.TexturePicker;
 
+        /// <summary>
+        /// Texture path picker to use when importing models.
+        /// </summary>
+        public static CubismModel3Json.TexturePathPicker OnPickTexturePath = CubismBuiltinPickers.TexturePathPicker;
+
 
         /// <summary>
         /// Allows getting called back whenever a Cubism motions is imported (and before it is saved).

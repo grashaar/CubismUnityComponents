@@ -120,6 +120,40 @@ namespace Live2D.Cubism.Rendering
         }
 
 
+        [SerializeField, HideInInspector]
+        private string _mainTexturePath = "";
+
+        public string MainTexturePath
+        {
+            get { return _mainTexturePath; }
+            set
+            {
+                if (value == _mainTexturePath)
+                {
+                    return;
+                }
+
+                _mainTexturePath = (value != null) ? value : "";
+            }
+        }
+
+        [SerializeField, HideInInspector]
+        private bool _forceUseTexturePath = false;
+
+        public bool ForceUseTexturePath
+        {
+            get { return _forceUseTexturePath; }
+            set
+            {
+                if (value == _forceUseTexturePath)
+                {
+                    return;
+                }
+
+                _forceUseTexturePath = value;
+            }
+        }
+
         /// <summary>
         /// <see cref="MainTexture"/> backing field.
         /// </summary>

@@ -37,6 +37,15 @@ namespace Live2D.Cubism.Rendering
         [SerializeField, HideInInspector]
         private float _lastOpacity;
 
+        [SerializeField, HideInInspector]
+        public bool UseMutualTexturePath = false;
+
+        [SerializeField, HideInInspector]
+        public string MutualTexturePath = "";
+
+        [SerializeField, HideInInspector]
+        public bool ForceUseTexturePath = false;
+
         /// <summary>
         /// Last model opacity.
         /// </summary>
@@ -407,8 +416,95 @@ namespace Live2D.Cubism.Rendering
             _sortingLayerId = renderers[0]
                 .MeshRenderer
                 .sortingLayerID;
+
+#if UNITY_EDITOR
+            if (Application.isPlaying)
+#endif
+            {
+                TryInitializeMainTextures();
+            }
         }
 
+        private void TryInitializeMainTextures()
+        {
+            var renderers = Renderers;
+
+            if (renderers == null)
+                return;
+
+            if (UseMutualTexturePath && !string.IsNullOrEmpty(MutualTexturePath))
+            {
+                TryInitializeMainTextures(MutualTexturePath);
+            }
+            else
+            {
+                TryInitializeMainTextures(renderers, ForceUseTexturePath);
+            }
+        }
+
+        private void TryInitializeMainTextures(CubismRenderer[] renderers, bool forceUseTexturePath)
+        {
+            for (var i = 0; i < renderers.Length; i++)
+            {
+                if (!renderers[i])
+                    continue;
+
+                var renderer = renderers[i];
+
+                if (renderer.MainTexture && renderer.MainTexture != Texture2D.whiteTexture)
+                {
+                    if (!forceUseTexturePath && !renderer.ForceUseTexturePath)
+                        continue;
+
+                    renderer.MainTexture = Texture2D.whiteTexture;
+                }
+
+                if (string.IsNullOrEmpty(renderer.MainTexturePath))
+                    continue;
+
+                Loader.CubismLoader.Load(renderer.MainTexturePath, (key, texture) => renderer.MainTexture = texture);
+            }
+        }
+
+        private void TryInitializeMainTextures(string texturePath)
+        {
+            for (var i = 0; i < Renderers.Length; i++)
+            {
+                if (!Renderers[i])
+                    continue;
+
+                var renderer = Renderers[i];
+
+                if (renderer.MainTexture && renderer.MainTexture != Texture2D.whiteTexture)
+                {
+                    if (!ForceUseTexturePath && !renderer.ForceUseTexturePath)
+                        continue;
+
+                    renderer.MainTexture = Texture2D.whiteTexture;
+                }
+            }
+
+            Loader.CubismLoader.Load(texturePath, (key, texture) => {
+                if (Renderers == null)
+                    return;
+
+                for (var i = 0; i < Renderers.Length; i++)
+                {
+                    if (!Renderers[i])
+                        continue;
+
+                    var renderer = Renderers[i];
+
+                    if (renderer.MainTexture && renderer.MainTexture != Texture2D.whiteTexture)
+                    {
+                        if (!ForceUseTexturePath && !renderer.ForceUseTexturePath)
+                            continue;
+                    }
+
+                    renderer.MainTexture = texture;
+                }
+            });
+        }
 
         /// <summary>
         /// Updates opacity if necessary.
