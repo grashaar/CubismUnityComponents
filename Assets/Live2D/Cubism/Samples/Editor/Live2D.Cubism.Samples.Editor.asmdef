@@ -1,0 +1,22 @@
+{
+    "name": "Live2D.Cubism.Samples.Editor",
+    "references": [
+        "Live2D.Cubism",
+        "Live2D.Cubism.Editor",
+        "Live2D.Cubism.Samples",
+        "Live2D.Cubism.Framework.Expression.Editor",
+        "Live2D.Cubism.Framework.MotionFade.Editor",
+        "Live2D.Cubism.Framework.Pose.Editor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Live2D.Cubism.Samples",
+    "references": [
+        "Live2D.Cubism"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

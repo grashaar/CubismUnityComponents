@@ -16,6 +16,6 @@ namespace Live2D.Cubism.Framework.Expression
         /// Cubism expression objects.
         /// </summary>
         [SerializeField]
-        public CubismExpressionData[] CubismExpressionObjects;
+        public CubismExpressionData[] CubismExpressionObjects = null;
     }
 }

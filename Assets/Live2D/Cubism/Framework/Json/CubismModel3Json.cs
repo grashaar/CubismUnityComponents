@@ -180,13 +180,13 @@ namespace Live2D.Cubism.Framework.Json
         /// Groups.
         /// </summary>
         [SerializeField]
-        public SerializableGroup[] Groups;
+        public SerializableGroup[] Groups = null;
 
         /// <summary>
         /// Hit areas.
         /// </summary>
         [SerializeField]
-        public SerializableHitArea[] HitAreas;
+        public SerializableHitArea[] HitAreas = null;
 
         #endregion
 

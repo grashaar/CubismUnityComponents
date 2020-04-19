@@ -1,0 +1,18 @@
+{
+    "name": "Live2D.Cubism.Framework.MotionFade.Editor",
+    "references": [
+        "Live2D.Cubism",
+        "Live2D.Cubism.Editor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

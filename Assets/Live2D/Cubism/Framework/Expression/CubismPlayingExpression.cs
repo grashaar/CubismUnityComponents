@@ -23,7 +23,7 @@ namespace Live2D.Cubism.Framework.Expression
         /// Expression type.
         /// </summary>
         [SerializeField]
-        public string Type;
+        public string Type = string.Empty;
 
         /// <summary>
         /// Expression fade in time.
@@ -59,7 +59,7 @@ namespace Live2D.Cubism.Framework.Expression
         /// Expression parameters cache.
         /// </summary>
         [SerializeField]
-        public CubismParameter[] Destinations;
+        public CubismParameter[] Destinations = null;
 
         /// <summary>
         /// Expression parameter value.
@@ -71,7 +71,7 @@ namespace Live2D.Cubism.Framework.Expression
         /// Expression parameter blend mode.
         /// </summary>
         [SerializeField]
-        public CubismParameterBlendMode[] Blend;
+        public CubismParameterBlendMode[] Blend = null;
 
         #endregion
 

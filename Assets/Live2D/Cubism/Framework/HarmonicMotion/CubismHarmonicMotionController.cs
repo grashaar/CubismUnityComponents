@@ -34,7 +34,7 @@ namespace Live2D.Cubism.Framework.HarmonicMotion
         /// The timescales for each channel.
         /// </summary>
         [SerializeField]
-        public float[] ChannelTimescales;
+        public float[] ChannelTimescales = null;
 
 
         /// <summary>

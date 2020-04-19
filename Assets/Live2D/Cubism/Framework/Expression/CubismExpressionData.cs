@@ -36,7 +36,7 @@ namespace Live2D.Cubism.Framework.Expression
         /// Expression Parameters
         /// </summary>
         [SerializeField]
-        public SerializableExpressionParameter[] Parameters;
+        public SerializableExpressionParameter[] Parameters = null;
 
         /// <summary>
         /// ExpressionParameter

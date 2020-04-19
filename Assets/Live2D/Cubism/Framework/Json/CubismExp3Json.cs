@@ -52,7 +52,7 @@ namespace Live2D.Cubism.Framework.Json
         /// Expression Type
         /// </summary>
         [SerializeField]
-        public string Type;
+        public string Type = string.Empty;
 
         /// <summary>
         /// Expression FadeInTime
@@ -70,7 +70,7 @@ namespace Live2D.Cubism.Framework.Json
         /// Expression Parameters
         /// </summary>
         [SerializeField]
-        public SerializableExpressionParameter[] Parameters;
+        public SerializableExpressionParameter[] Parameters = null;
 
         #endregion
 

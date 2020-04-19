@@ -58,7 +58,7 @@ namespace Live2D.Cubism.Core
         /// <see cref="Bytes"/> backing field.
         /// </summary>
         [SerializeField]
-        private byte[] _bytes;
+        private byte[] _bytes = null;
 
         /// <summary>
         /// Raw moc bytes.

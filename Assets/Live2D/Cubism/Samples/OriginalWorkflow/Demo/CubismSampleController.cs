@@ -35,13 +35,13 @@ namespace Live2D.Cubism.Samples.OriginalWorkflow.Demo
         /// Operation animation clip from the inspector.
         /// </summary>
         [SerializeField]
-        private AnimationClip _bodyAnimation;
+        private AnimationClip _bodyAnimation = null;
 
         /// <summary>
         /// Array of motion set in tapbody.
         /// </summary>
         [SerializeField]
-        private AnimationClip[] _tapBodyMotions;
+        private AnimationClip[] _tapBodyMotions = null;
 
         /// <summary>
         /// Motion set in loop motion.

@@ -268,7 +268,7 @@ namespace Live2D.Cubism.Editor.Importers
         /// </summary>
         /// <typeparam name="T">The type of importer to register.</typeparam>
         /// <param name="fileExtension">The file extension the importer supports.</param>
-        internal static void RegisterImporter<T>(string fileExtension) where T : ICubismImporter
+        public static void RegisterImporter<T>(string fileExtension) where T : ICubismImporter
         {
             _registry.Add(new ImporterEntry
             {

@@ -25,7 +25,7 @@ namespace Live2D.Cubism.Framework.Expression
         /// Expressions data list.
         /// </summary>
         [SerializeField]
-        public CubismExpressionList ExpressionsList;
+        public CubismExpressionList ExpressionsList = null;
 
         /// <summary>
         /// CubismModel cache.

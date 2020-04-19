@@ -89,7 +89,7 @@ namespace Live2D.Cubism.Core
         /// <see cref="Moc"/> backing field.
         /// </summary>
         [SerializeField, HideInInspector]
-        private CubismMoc _moc;
+        private CubismMoc _moc = null;
 
         /// <summary>
         /// Moc the instance was instantiated from.
