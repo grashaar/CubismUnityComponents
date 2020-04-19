@@ -50,15 +50,17 @@ Resources like shaders and other assets are located in `./Assets/Live2D/Cubism/R
 
 ### Loader
 
-`CubismLoader` helps loading `Texture2D` from any custom source, such as Addressables.
+The `Live2D.Cubism.Loader.CubismLoader` helps loading Texture2D from any custom source, such as Addressables.
 
 To enable this feature, just enter the `CUBISM_LOADER` symbol in `Project Settings > Player > Scripting Define Symbols`.
 
+At runtime, before any Cubism code is run, you have to register a custom loader that implements `Live2D.Cubism.Loader.ILoad` interface via `CubismLoader.Initialize(ILoad)` method.
+
 **Note:**
-- Cubism Model Importer can automatically set up necessary data(*) for this feature when you import a model. However you must set up the `CUBISM_LOADER` symbol **before** importing. Otherwise, you will have to either re-import or set up those data manually.
+- Cubism Model Importer can automatically set up necessary data(1) for this feature when you import a model. However you must set up the `CUBISM_LOADER` symbol **before** importing. Otherwise, you will have to either re-import or set up those data manually.
 - If you want to automatically force CubismRenderController to use the same Texture2D for all CubismRenderer(s) of that model, also set up the `CUBISM_USE_MUTUAL_TEXTURE` symbol **before** importing.
 
-(*) The necessary data are:
+(1) The necessary data are:
 - CubismRenderController: UseMutualTexturePath, MutualTexturePath, ForceUseTexturePath
 - CubismRenderer: MainTexturePath, ForceUseTexturePath
 
