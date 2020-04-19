@@ -165,7 +165,7 @@ namespace Live2D.Cubism.Editor.Importers
 
 
             // Instantiate model source and model.
-#if LIVE_2D_ADDRESSABLES
+#if CUBISM_LOADER
             var model = Model3Json.ToModel(CubismImporter.OnPickMaterial, CubismImporter.OnPickTexturePath, ShouldImportAsOriginalWorkflow);
 #else
             var model = Model3Json.ToModel(CubismImporter.OnPickMaterial, CubismImporter.OnPickTexture, ShouldImportAsOriginalWorkflow);
