@@ -1,3 +1,23 @@
+# Install as a package
+
+Before install this package, copy entire `Resources` folder from [here](https://github.com/Live2D/CubismUnityComponents/tree/develop/Assets/Live2D/Cubism/Rendering/Resources) to your project `Assets/` folder.
+
+## OpenUPM
+
+First, install OpenUPM-CLI, NodeJS 12 is required
+
+```
+npm install -g openupm-cli
+```
+
+(Read more about OpenUPM-CLI [here](https://github.com/openupm/openupm-cli#installation))
+
+Then, install this package
+
+```
+openupm add com.live2d.cubism-cubismloader
+```
+
 # Cubism Unity Components
 
 Welcome to the open components of the Cubism SDK for Unity.
