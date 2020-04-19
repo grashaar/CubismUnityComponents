@@ -3,6 +3,8 @@
 !/[Aa]ssets/*.rsp
 !/[Aa]ssets/*.rsp.meta
 !/[Aa]ssets/Live2D.meta
+!/[Aa]ssets/Live2D/package.json
+!/[Aa]ssets/Live2D/package.json.meta
 !/[Aa]ssets/Live2D/Cubism.meta
 !/[Aa]ssets/Live2D/Cubism/**/*
 !/.gitattributes

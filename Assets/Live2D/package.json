@@ -1,0 +1,10 @@
+{
+  "author": "Live2D <https://github.com/Live2D> (https://github.com/Live2D)",
+  "description": "Open Cubism Components for Unity",
+  "displayName": "Live2D Cubism Unity Components",
+  "license": "Live2D Open Software License",
+  "name": "com.live2d.cubism",
+  "version": "4.0.101",
+  "type": "library",
+  "unity": "2019.1"
+}
