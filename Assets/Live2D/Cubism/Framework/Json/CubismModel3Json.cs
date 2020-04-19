@@ -637,6 +637,11 @@ namespace Live2D.Cubism.Framework.Json
                 if (i == 0)
                 {
                     rendererController.MutualTexturePath = renderers[i].MainTexturePath;
+                    rendererController.ForceUseTexturePath = true;
+
+#if CUBISM_USE_MUTUAL_TEXTURE
+                    rendererController.UseMutualTexturePath = true;
+#endif
                 }
             }
 
@@ -818,7 +823,7 @@ namespace Live2D.Cubism.Framework.Json
             return model;
         }
 
-        #region Helper Methods
+#region Helper Methods
 
         /// <summary>
         /// Type-safely loads an asset.
@@ -939,9 +944,9 @@ namespace Live2D.Cubism.Framework.Json
         }
 
 
-        #endregion
+#endregion
 
-        #region Json Helpers
+#region Json Helpers
 
         /// <summary>
         /// File references data.
@@ -1111,6 +1116,6 @@ namespace Live2D.Cubism.Framework.Json
             public string Id;
         }
 
-        #endregion
+#endregion
     }
 }
