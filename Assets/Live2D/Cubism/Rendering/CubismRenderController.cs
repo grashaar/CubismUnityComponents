@@ -417,12 +417,14 @@ namespace Live2D.Cubism.Rendering
                 .MeshRenderer
                 .sortingLayerID;
 
+#if CUBISM_LOADER
 #if UNITY_EDITOR
             if (Application.isPlaying)
 #endif
             {
                 TryInitializeMainTextures();
             }
+#endif
         }
 
         private void TryInitializeMainTextures()
