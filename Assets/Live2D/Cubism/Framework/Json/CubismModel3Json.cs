@@ -633,6 +633,7 @@ namespace Live2D.Cubism.Framework.Json
             for (var i = 0; i < renderers.Length; ++i)
             {
                 renderers[i].MainTexturePath = pickTexturePath(this, drawables[i]);
+                renderers[i].ForceUseTexturePath = true;
 
                 if (i == 0)
                 {
