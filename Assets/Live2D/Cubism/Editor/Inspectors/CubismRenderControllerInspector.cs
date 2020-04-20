@@ -24,6 +24,8 @@ namespace Live2D.Cubism.Editor.Inspectors
 
         private bool ShowAdvanced { get; set; }
 
+        private bool ShowTexturePath { get; set; }
+
         #region Editor
 
         /// <summary>
@@ -48,7 +50,11 @@ namespace Live2D.Cubism.Editor.Inspectors
             controller.Opacity = EditorGUILayout.Slider("Opacity", controller.Opacity, 0f, 1f);
 
 
+#if UNITY_2019_1_OR_NEWER
+            ShowSorting = EditorGUILayout.BeginFoldoutHeaderGroup(ShowSorting, "Sorting");
+#else
             ShowSorting = EditorGUILayout.Foldout(ShowSorting, "Sorting", EditorStyles.boldFont);
+#endif
 
             if (ShowSorting)
             {
@@ -57,8 +63,16 @@ namespace Live2D.Cubism.Editor.Inspectors
                 controller.SortingMode = (CubismSortingMode)EditorGUILayout.EnumPopup("Mode", (Enum)controller.SortingMode);
             }
 
+#if UNITY_2019_1_OR_NEWER
+            EditorGUILayout.EndFoldoutHeaderGroup();
+#endif
 
+
+#if UNITY_2019_1_OR_NEWER
+            ShowAdvanced = EditorGUILayout.BeginFoldoutHeaderGroup(ShowAdvanced, "Advanced");
+#else
             ShowAdvanced = EditorGUILayout.Foldout(ShowAdvanced, "Advanced", EditorStyles.boldFont);
+#endif
 
             if (ShowAdvanced)
             {
@@ -72,6 +86,27 @@ namespace Live2D.Cubism.Editor.Inspectors
                 }
             }
 
+#if UNITY_2019_1_OR_NEWER
+            EditorGUILayout.EndFoldoutHeaderGroup();
+#endif
+
+
+#if UNITY_2019_1_OR_NEWER
+            ShowTexturePath = EditorGUILayout.BeginFoldoutHeaderGroup(ShowTexturePath, "Mutual Texture Path");
+#else
+            ShowTexturePath = EditorGUILayout.Foldout(ShowTexturePath, "Mutual Texture Path", EditorStyles.boldFont);
+#endif
+
+            if (ShowTexturePath)
+            {
+                controller.MutualTexturePath = EditorGUILayout.TextField("Path", controller.MutualTexturePath);
+                controller.ForceUseTexturePath = EditorGUILayout.Toggle("Force Use Path", controller.ForceUseTexturePath);
+                controller.UseMutualTexturePath = EditorGUILayout.Toggle("Use Mutual Path", controller.UseMutualTexturePath);
+            }
+
+#if UNITY_2019_1_OR_NEWER
+            EditorGUILayout.EndFoldoutHeaderGroup();
+#endif
 
             // Save any changes.
             if (EditorGUI.EndChangeCheck())
@@ -88,6 +123,6 @@ namespace Live2D.Cubism.Editor.Inspectors
             }
         }
 
-        #endregion
+#endregion
     }
 }

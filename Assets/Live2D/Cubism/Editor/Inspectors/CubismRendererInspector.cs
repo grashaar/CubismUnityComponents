@@ -21,6 +21,8 @@ namespace Live2D.Cubism.Editor.Inspectors
     {
         #region Editor
 
+        private bool ShowTexturePath { get; set; }
+
         /// <summary>
         /// Draws inspector.
         /// </summary>
@@ -47,7 +49,6 @@ namespace Live2D.Cubism.Editor.Inspectors
             renderer.MainTexture = EditorGUILayout.ObjectField("Main Texture", renderer.MainTexture, typeof(Texture2D), true) as Texture2D;
             renderer.LocalSortingOrder = EditorGUILayout.IntField("Local Order", renderer.LocalSortingOrder);
 
-
             // Save any changes.
             if (EditorGUI.EndChangeCheck())
             {
@@ -67,6 +68,23 @@ namespace Live2D.Cubism.Editor.Inspectors
                 renderer.MeshFilter.hideFlags   ^= HideFlags.HideInInspector;
                 renderer.MeshRenderer.hideFlags ^= HideFlags.HideInInspector;
             }
+
+
+#if UNITY_2019_1_OR_NEWER
+            ShowTexturePath = EditorGUILayout.BeginFoldoutHeaderGroup(ShowTexturePath, "Main Texture Path");
+#else
+            ShowTexturePath = EditorGUILayout.Foldout(ShowTexturePath, "Main Texture Path", EditorStyles.boldFont);
+#endif
+
+            if (ShowTexturePath)
+            {
+                renderer.MainTexturePath = EditorGUILayout.TextField("Path", renderer.MainTexturePath);
+                renderer.ForceUseTexturePath = EditorGUILayout.Toggle("Force Use Path", renderer.ForceUseTexturePath);
+            }
+
+#if UNITY_2019_1_OR_NEWER
+            EditorGUILayout.EndFoldoutHeaderGroup();
+#endif
         }
 
         #endregion
