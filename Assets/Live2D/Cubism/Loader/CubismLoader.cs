@@ -7,7 +7,7 @@ namespace Live2D.Cubism.Loader
     using Result = Texture2D;
     using Callback = Action<string, Texture2D>;
 
-    public interface ILoad
+    public interface ICubsimLoader
     {
         void Load(string key, Callback onLoaded);
     }
@@ -16,9 +16,9 @@ namespace Live2D.Cubism.Loader
     {
         private readonly static Dictionary<string, Request> _requests = new Dictionary<string, Request>();
 
-        private static ILoad _loader;
+        private static ICubsimLoader _loader;
 
-        public static void Initialize(ILoad loader)
+        public static void Initialize(ICubsimLoader loader)
             => _loader = loader ?? throw new ArgumentNullException(nameof(loader));
 
         private static bool Validate()
