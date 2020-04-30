@@ -4,13 +4,11 @@ Before install this package, copy entire `Resources` folder from [here](https://
 
 ## OpenUPM
 
-First, install OpenUPM-CLI, NodeJS 12 is required
+First, install [OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation), NodeJS 12 is required
 
 ```
 npm install -g openupm-cli
 ```
-
-(Read more about OpenUPM-CLI [here](https://github.com/openupm/openupm-cli#installation))
 
 Then, install this package
 
@@ -74,7 +72,7 @@ The `Live2D.Cubism.Loader.CubismLoader` helps loading Texture2D from any custom 
 
 To enable this feature, just enter the `CUBISM_LOADER` symbol in `Project Settings > Player > Scripting Define Symbols`.
 
-At runtime, before any Cubism code is run, you have to register a custom loader that implements `Live2D.Cubism.Loader.ILoad` interface via `CubismLoader.Initialize(ILoad)` method.
+At runtime, before any Cubism code is run, you have to register a custom loader that implements `Live2D.Cubism.Loader.ICubismLoad` interface via `CubismLoader.Initialize(ICubismLoad)` method.
 
 **Note:**
 - Cubism Model Importer can automatically set up necessary data(1) for this feature when you import a model. However you must set up the `CUBISM_LOADER` symbol **before** importing. Otherwise, you will have to either re-import or set up those data manually.
