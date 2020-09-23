@@ -4,7 +4,7 @@
   "displayName": "Live2D Cubism Unity Components with Cubism Loader",
   "license": "Live2D Open Software License",
   "name": "com.live2d.cubism-cubismloader",
-  "version": "4.0.106",
+  "version": "4.0.107",
   "type": "library",
   "unity": "2019.1"
 }
